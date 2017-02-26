@@ -1,0 +1,6 @@
+{
+  "presets": [["latest", {
+      "modules": false
+    }]],
+  "plugins": ["babel-plugin-webpack-alias"]
+}

@@ -1,6 +1,4 @@
 {
-  "presets": [["latest", {
-      "modules": false
-    }]],
-  "plugins": ["babel-plugin-webpack-alias"]
+  "presets": ["es2015"],
+  "plugins": ["transform-class-properties"]
 }

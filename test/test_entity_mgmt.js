@@ -1,4 +1,4 @@
-import { strictEqual, ok } from 'assert';
+import assert from 'assert';
 import * as Simple from '../src/Simple';
 
 const EXPECTED_LEN = 50;
@@ -9,11 +9,11 @@ describe('entity', () => {
 
     describe('entity.fn.create_entity_stack', () => {
       it('creates a stack of ids of a specified length', () => {
-        strictEqual(entities.length, EXPECTED_LEN);
+        assert.strictEqual(entities.length, EXPECTED_LEN);
       });
 
       it('creates a stack of ids with a Uint32Array', () => {
-        strictEqual(entities instanceof Uint32Array, true);
+        assert.strictEqual(entities instanceof Uint32Array, true);
       });
     });
   });
@@ -24,7 +24,15 @@ describe('entity', () => {
     );
 
     it('contains a stack of ids', () => {
-      ok(manager.entities);
+      assert.ok(manager.entities);
+    });
+
+    it('contains its own unique stack', () => {
+      let manager2 = new Simple.EntityManager(
+        Simple.create_entity_stack(1)
+      );
+      assert.notEqual(manager.entities, manager2.entities);
+      assert.strictEqual(manager2.entities.length, 1);
     });
   });
 });

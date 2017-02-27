@@ -14,6 +14,7 @@ const update = () => {
 };
 
 const render = (lagOffset) => {
+  /*eslint no-console: ["error", { allow: ["log", "warn", "error"] }] */
   console.log('render', lagOffset);
 };
 
@@ -36,7 +37,7 @@ const frame_ = (hrt) => {
 
   lagOffset = lag / FRAME_DURATION;
 
-  this.render(lagOffset);
+  render(lagOffset);
 
   previousTime = hrt;
 };

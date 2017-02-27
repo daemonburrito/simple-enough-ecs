@@ -30,7 +30,6 @@
     "eslint": "^3.16.1",
     "express": "^4.14.1",
     "hbs": "^4.0.1",
-    "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "rollup": "^0.41.4",
     "rollup-plugin-alias": "^1.2.0",

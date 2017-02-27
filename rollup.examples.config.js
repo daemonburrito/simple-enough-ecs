@@ -12,7 +12,8 @@ export default {
       contentBase: 'examples/hello-world/'
     }),
     alias({
-      simple: 'src/simple/index.js'
+      simple: './../../simple',
+      resolve: ['.js']
     })
   ],
   //external: external,

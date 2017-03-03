@@ -21,11 +21,11 @@ export default class SystemManager extends AbstractSystemManager {
 
   //eslint "constructor-super": null
   constructor () {
-
+    super();
   }
 
   register_queue(queue) {
-
+    
   }
 
 

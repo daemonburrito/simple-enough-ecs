@@ -34,5 +34,10 @@ describe('entity', () => {
       assert.notEqual(manager.entities, manager2.entities);
       assert.strictEqual(manager2.entities.length, 1);
     });
+
+    it('creates an entity and returns a wrapper object', () => {
+      let new_entity = manager.createEntity();
+      assert.strictEqual(new_entity.entity, manager.entities[0]);
+    });
   });
 });

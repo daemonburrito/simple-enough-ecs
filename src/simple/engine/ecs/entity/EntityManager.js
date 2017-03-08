@@ -1,24 +1,56 @@
-// An object with some convenience methods for entities and components. More
-// than one instance can exist at runtime.
+// Entity management
+const DEFAULT_STACK_CTOR = Uint32Array,
+  DEFAULT_STACK_SIZE = 100;
+
+
 export default class EntityManager {
   // entities stack
   entities;
-  count;
+
+  // last created index
+  lastIndex = 0;
+
+  // mapping between component key and entity ids
+  componentEntityMap = new Map();
+
+  // actual component values
+  entityComponents = new Map();
 
   constructor(entities) {
-    this.entities = entities;
-    this.count = 0;
+    // if a stack is not provided, create the default variety.
+    if (entities === undefined) {
+      this.entities = new DEFAULT_STACK_CTOR(DEFAULT_STACK_SIZE);
+    }
+    else {
+      this.entities = entities;
+    }
   }
 
-  createEntity() {
-    this.entities[this.count] = this.count;
-    ++this.count;
-    return this._wrapEntity(this.entities[this.count-1]);
+  // Factory fn for entities (though they are just integer ids).
+  create() {
+    let id = this.lastIndex;
+    ++this.lastIndex;
+    return id;
   }
 
-  _wrapEntity(entity) {
-    return {
-      entity
-    };
+  attachComponents(id, ...components) {
+    this.entityComponents.set(
+      Symbol(id), components
+    );
+  }
+
+  register(id, componentsKey) {
+    let key = Symbol(componentsKey);
+
+    if (!this.componentEntityMap.has(key)) {
+      this.componentEntityMap.set(
+        key, [id]
+      );
+    }
+    else {
+      let ids = this.componentEntityMap.get(key);
+      ids.push(id);
+      this.componentEntityMap.set(key, ids);
+    }
   }
 }

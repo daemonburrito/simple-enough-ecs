@@ -25,7 +25,7 @@ export default class SystemManager extends AbstractSystemManager {
   }
 
   register_queue(queue) {
-    
+    return queue;
   }
 
 

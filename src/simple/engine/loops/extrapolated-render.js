@@ -14,7 +14,6 @@ const update = () => {
 };
 
 const render = (lagOffset) => {
-  /*eslint no-console: ["error", { allow: ["log", "warn", "error"] }] */
   console.log('render', lagOffset);
 };
 

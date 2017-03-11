@@ -11,9 +11,13 @@ export default class EntityManager {
   lastIndex = 0;
 
   // mapping between component key and entity ids
+  // [Symbol(componenstKey)]: [0,1,2,3]
   componentEntityMap = new Map();
 
   // actual component values
+  // [entityId]: {
+  //  "foo": 100
+  // }
   entityComponents = new Map();
 
   constructor(entities) {
@@ -28,29 +32,46 @@ export default class EntityManager {
 
   // Factory fn for entities (though they are just integer ids).
   create() {
-    let id = this.lastIndex;
-    ++this.lastIndex;
-    return id;
+    return this._getId();
   }
 
+  // Add an entry to the mapping [Symbol(id)]->{components}
   attachComponents(id, ...components) {
     this.entityComponents.set(
       Symbol(id), components
     );
   }
 
+  // Add an entry to the mapping [Symbol(componentsKey)]->[ids]
   register(id, componentsKey) {
-    let key = Symbol(componentsKey);
-
-    if (!this.componentEntityMap.has(key)) {
+    if (!this.componentEntityMap.has(componentsKey)) {
       this.componentEntityMap.set(
-        key, [id]
+        componentsKey, [id]
       );
     }
     else {
-      let ids = this.componentEntityMap.get(key);
+      let ids = this.componentEntityMap.get(componentsKey);
       ids.push(id);
-      this.componentEntityMap.set(key, ids);
+      this.componentEntityMap.set(componentsKey, ids);
+    }
+  }
+
+  // Retrieve list of entities from a componentsKey
+  query(componentsKey) {
+    return this.componentEntityMap.get(componentsKey);
+  }
+
+  _getId() {
+    let id = this.lastIndex;
+    ++this.lastIndex;
+    return id;
+  }
+
+  // Generator which will return (entityId, {components})
+  *entityFeed(componentsKey) {
+    let ids = this.componentEntityMap.get(componentsKey);
+    for (let entity in ids) {
+      yield entity, this.entityComponents.get(Symbol(entity));
     }
   }
 }

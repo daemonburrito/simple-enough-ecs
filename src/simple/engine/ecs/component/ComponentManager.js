@@ -27,12 +27,13 @@
 // components for which they are concerned.
 export default class ComponentManager {
   components = [];
+  knownKeys = new Set();
 
   register (...components) {
     components.forEach(c => this.components.push(c));
   }
 
-  createComponentKey (entity, ...components) {
+  createComponentKey (...components) {
     let mask = Array(this.components.length).fill(0);
 
     components.forEach(c => {
@@ -45,8 +46,10 @@ export default class ComponentManager {
         mask[i] = 0;
       }
     });
-    console.log('Key created: ', mask);
-    return mask;
+
+    let key = Symbol(mask);
+    this.knownKeys.add(key);
+    return key;
   }
 
   indexOf (name) {
@@ -69,9 +72,14 @@ export default class ComponentManager {
     query.forEach(c => {
       index = this.components.indexOf(c);
       if (index !== -1) {
-        // each components index becomes its right offset in a bitfield
         componentIndexMap.set(index, c);
       }
     });
+  }
+
+  *componentKeysFeed() {
+    for (let k in this.knownKeys) {
+      yield k;
+    }
   }
 }

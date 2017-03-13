@@ -33,7 +33,7 @@ describe('entity-component', () => {
       });
 
       // Create the componentsKey
-      const cKey = world.components.createComponentKey(
+      const cKey = world.components.createComponentsKey(
         ...PLAYER_COMPONENT_BUNDLE);
 
       // Push the player ID into a list associated with a key created from the

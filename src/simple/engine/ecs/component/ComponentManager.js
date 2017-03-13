@@ -37,7 +37,7 @@ export default class ComponentManager {
     components.forEach(c => this.components.push(c));
   }
 
-  createComponentKey (...components) {
+  createComponentsKey (...components) {
     let mask = Array(this.components.length).fill(0);
 
     components.forEach(c => {

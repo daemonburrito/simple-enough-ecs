@@ -15,7 +15,7 @@ describe('component-entity-system', () => {
     world.SystemManager = new Simple.SystemManager();
 
     // Make a componentsKey with "name"
-    let componentKey = world.components.createComponentKey(['name']);
+    let componentKey = world.components.createComponentsKey(['name']);
 
     // Get the next available entity ID
     let player = world.entities.create();
@@ -79,8 +79,8 @@ describe('component-entity-system', () => {
     world.EntityManager = new Simple.EntityManager();
     world.SystemManager = new Simple.SystemManager();
 
-    let componentKey = world.components.createComponentKey([
-      'name', 'position', 'direction', 'velocity'
+    let componentKey = world.components.createComponentsKey([
+      'name', 'position', 'direction', 'speed'
     ]);
 
     let player = world.entities.create();

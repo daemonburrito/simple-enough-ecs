@@ -16,7 +16,7 @@ describe('Component-System', () => {
       let enabled = ['name', 'position', 'movement'],
         id = 1;
 
-      let key = world.components.createComponentKey(id, ...enabled);
+      let key = world.components.createComponentsKey(id, ...enabled);
 
       assert.ok(key);
     });

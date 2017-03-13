@@ -14,12 +14,6 @@ export default class SystemManager {
     this.queues.set(componentsKey, queue);
   }
 
-  // register(systemObj, componentsKey, queueSlug) {
-  //   this.queue[queueSlug].push(systemObj);
-  //
-  //   return systemObj;
-  // }
-
   // Return a queue of systems that are associated with a ComponentsKey
   query(componentsKey) {
     return this.queues.get(componentsKey);

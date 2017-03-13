@@ -2,6 +2,9 @@
 
 A Javascript game engine using an Entity-Component-System paradigm.
 
+## Documentation
+* [API](docs/API.md)
+
 ## License
 GNU Public License, version 3.
 

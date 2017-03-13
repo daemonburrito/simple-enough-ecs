@@ -7,49 +7,18 @@
 // priority of world updates.
 
 
-class SystemQueue {
-  sort = true;
-
-  constructor(queue) {
-    if (this.sort === true && queue.length > 1) {
-      let _queue = [];
-      _queue.sort(this._prioComparator);
-    }
-
-  }
-
-  run(entity, components) {
-    this.queue.forEach(v => v(entity, components));
-  }
-
-  static _prioComparator(a, b) {
-    if (!('priority' in a) || !('priority' in b)) {
-      throw Error("Can't sort with priorities");
-    }
-    if (a.priority <= b.priority) {
-      return -1;
-    }
-    else if (a.priority > b.priority) {
-      return 1;
-    }
-
-    return 0;
-  }
-}
-
-
 export default class SystemManager {
   queues = new Map();
 
-  register_queue(queue, componentsKey, sort) {
-    this.queues.set(componentsKey, new SystemQueue(queue, sort));
+  register_queue(queue, componentsKey) {
+    this.queues.set(componentsKey, queue);
   }
 
-  register(systemObj, componentsKey, queueSlug) {
-    this.queue[queueSlug].push(systemObj);
-
-    return systemObj;
-  }
+  // register(systemObj, componentsKey, queueSlug) {
+  //   this.queue[queueSlug].push(systemObj);
+  //
+  //   return systemObj;
+  // }
 
   // Return a queue of systems that are associated with a ComponentsKey
   query(componentsKey) {
@@ -57,6 +26,8 @@ export default class SystemManager {
   }
 
   runQueue(componentsKey, entity, components) {
-    this.queues.get(componentsKey).run(entity, components);
+    if (this.queues.has(componentsKey)) {
+      this.queues.get(componentsKey).run(entity, components);
+    }
   }
 }

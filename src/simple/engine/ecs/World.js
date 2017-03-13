@@ -4,23 +4,22 @@ export default class World {
   }
 
   update() {
+    //console.log("Updating world.");
     // get key from keys feed
     // get entity, components tuples from entities feed
-    for (let k of this.components.knownKeys()) {
+    for (let k of this.componentManager.knownKeys) {
       // Opportunity to parallelize here
-      for (let ecTuple of this.entities.entityFeed(k)) {
-        let entity, components = ecTuple;
-        this.systems.runQueue(k, entity, components);
+      for (let {entity: e, components: c} of this.entities.entityFeed(k)) {
+        this.systems.runQueue(k, e, c);
       }
     }
   }
 
   // Start simulation loop
   go(loopFrame) {
-    requestAnimationFrame(loopFrame.bind({
-      update: this.update(),
-      render: () => {}
-    }));
+    //console.log("Simulation started.");
+    loopFrame();
+    //requestAnimationFrame(loopFrame);
   }
 
   // Stop simulation loop

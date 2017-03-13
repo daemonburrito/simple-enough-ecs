@@ -11,7 +11,7 @@ export default class EntityManager {
   lastIndex = 0;
 
   // mapping between component key and entity ids
-  // [Symbol(componenstKey)]: [0,1,2,3]
+  // [Symbol(componentsKey)]: [0,1,2,3]
   componentEntityMap = new Map();
 
   // actual component values
@@ -33,12 +33,13 @@ export default class EntityManager {
   // Factory fn for entities (though they are just integer ids).
   create() {
     return this._getId();
+    //return Symbol();
   }
 
   // Add an entry to the mapping [Symbol(id)]->{components}
   attachComponents(id, ...components) {
     this.entityComponents.set(
-      Symbol(id), components
+      id, components
     );
   }
 
@@ -69,9 +70,19 @@ export default class EntityManager {
 
   // Generator which will return (entityId, {components})
   *entityFeed(componentsKey) {
-    let ids = this.componentEntityMap.get(componentsKey);
-    for (let entity in ids) {
-      yield entity, this.entityComponents.get(Symbol(entity));
+    let ids = this.query(componentsKey);
+    //console.log(ids);
+    for (let entity of ids) {
+      if (typeof entity === 'string') {
+        console.warn(
+          'Warning: `for..in` improperly cast `number` to `string`'
+        );
+        entity = Number(entity);
+      }
+      yield {
+        entity,
+        components: this.entityComponents.get(entity)
+      }
     }
   }
 }

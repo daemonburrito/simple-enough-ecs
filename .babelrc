@@ -1,4 +1,10 @@
 {
-  "presets": ["es2015"],
-  "plugins": ["transform-class-properties", "transform-runtime"]
+  "presets": [["env", {
+    "targets": {
+      "node": "current",
+      "browsers": ["last 2 firefox versions", "last 2 chrome versions"],
+      "useBuiltIns": true,
+      "debug": true
+    }}]],
+  "plugins": ["transform-class-properties"]
 }

@@ -29,6 +29,10 @@ export default class ComponentManager {
   components = [];
   knownKeys = new Set();
 
+  constructor() {
+
+  }
+
   register (...components) {
     components.forEach(c => this.components.push(c));
   }

@@ -5,28 +5,29 @@
 // `update()`. From the point of view of the game mechanics and implementation,
 // it offers a series of data types like queues for specifying order and
 // priority of world updates.
-class AbstractSystemManager {
-  update () {
-    this._update();
+
+
+export default class SystemManager {
+  queues = new Map();
+
+  register_queue(queue, componentsKey) {
+    this.queues.set(componentsKey, queue);
   }
 
-  _update () {
+  // register(systemObj, componentsKey, queueSlug) {
+  //   this.queue[queueSlug].push(systemObj);
+  //
+  //   return systemObj;
+  // }
 
-  }
-}
-
-// TODO Research alternatives to `super()`, for performance concerns.
-// https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/apA.md
-export default class SystemManager extends AbstractSystemManager {
-
-  //eslint "constructor-super": null
-  constructor () {
-    super();
+  // Return a queue of systems that are associated with a ComponentsKey
+  query(componentsKey) {
+    return this.queues.get(componentsKey);
   }
 
-  register_queue(queue) {
-    
+  runQueue(componentsKey, entity, components) {
+    if (this.queues.has(componentsKey)) {
+      this.queues.get(componentsKey).run(entity, components);
+    }
   }
-
-
 }

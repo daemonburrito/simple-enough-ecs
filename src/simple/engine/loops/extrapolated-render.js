@@ -10,17 +10,16 @@ let previousTime = 0,
   lagOffset = 0;
 
 const update = () => {
-  //console.log('update');
+  //console.log('** Update (noop)');
 };
 
 const render = (lagOffset) => {
-  /*eslint no-console: ["error", { allow: ["log", "warn", "error"] }] */
-  console.log('render', lagOffset);
+  //console.log('** Render (noop)', lagOffset);
 };
 
 
-const frame_ = (hrt) => {
-  requestAnimationFrame(frame_);
+const Frame = function (hrt) {
+  //console.log("** Animation frame", this);
 
   if (!hrt) {
     hrt = 0;
@@ -30,17 +29,23 @@ const frame_ = (hrt) => {
   lag += elapsed;
 
   while (lag >= FRAME_DURATION) {
-    update();
+    this.update();
 
     lag -= FRAME_DURATION;
   }
 
   lagOffset = lag / FRAME_DURATION;
 
-  render(lagOffset);
+  this.update();
+  this.render(lagOffset);
 
   previousTime = hrt;
+
+  requestAnimationFrame(Frame.bind(this));
+
 };
 
-
-export default frame_;
+export default Frame;
+export {
+  Frame, update, render
+};

@@ -1,5 +1,6 @@
 import assert from 'assert';
-import * as Simple from '../../src/Simple';
+// import * as Simple from '../../src/Simple';
+import * as Simple from '../../lib/simple.es';
 
 // Stub requestAnimationFrame for tests
 import {replaceRaf} from 'raf-stub';
@@ -14,8 +15,9 @@ describe('component-entity-system', () => {
     world.EntityManager = new Simple.EntityManager();
     world.SystemManager = new Simple.SystemManager();
 
+    console.log(world.components);
     // Make a componentsKey with "name"
-    let componentKey = world.components.createComponentsKey(['name']);
+    let componentKey = world.components.createComponentKey(['name']);
 
     // Get the next available entity ID
     let player = world.entities.create();
@@ -79,8 +81,8 @@ describe('component-entity-system', () => {
     world.EntityManager = new Simple.EntityManager();
     world.SystemManager = new Simple.SystemManager();
 
-    let componentKey = world.components.createComponentsKey([
-      'name', 'position', 'direction', 'speed'
+    let componentKey = world.components.createComponentKey([
+      'name', 'position', 'direction', 'velocity'
     ]);
 
     let player = world.entities.create();
@@ -107,7 +109,7 @@ describe('component-entity-system', () => {
 
     class MovementSystem extends Simple.System {
       update(entity, components) {
-        //console.log(entity, components);
+        console.log(entity, components);
 
         let dirRads = components[0].direction * Math.PI/180;
 

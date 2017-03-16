@@ -1,5 +1,3 @@
-import "babel-polyfill";
-
 import EntityManager from './simple/engine/ecs/entity/EntityManager';
 import EntityMeta from './simple/engine/ecs/entity/EntityMeta';
 

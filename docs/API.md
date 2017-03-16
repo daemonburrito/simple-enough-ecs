@@ -213,6 +213,47 @@ On each tick, all entities with a matching `componentsKey` with be passed to the
 
 ## World
 
-todo...
+`const world = new Simple.World();`
+
+The `World` is the only object aware of all other Simple objects. The prescribed pattern is to set three special attributes with new instances at start-up time:
+
+```javascript
+const world = new Simple.World();
+
+// Worlds have special behavior when these three particular attributes
+// set:
+world.ComponentManager = new Simple.ComponentManager();
+world.EntityManager = new Simple.EntityManager();
+world.SystemManager = new Simple.SystemManager();
+
+// Get instances like this:
+
+// `world.components` came from `ComponentManager`
+let key = world.components.createComponentKey(['name', 'position']);
+
+// `world.entities` came from `EntityManager`
+let tree = world.entities.create();
+world.entities.register(tree, key);
+world.entities.attachComponents(tree, {
+  name: 'tree',
+  position: [2, 1, 0]
+});
+
+// `world.systems` came from `SystemManager`
+class PositionSystem extends Simple.System {
+  update(entity, components) {
+    // do something with components[0].position[0], etc.
+  }
+}
+let positionSystem = new PositionSystem();
+
+// Register a key with a queue:
+world.systems.register_queue(
+  new Simple.SystemQueue([positionSystem]),
+  key
+);
+```
+
+At this point, any calls to `World.update()` will run all `System.update()` for Systems that have been registered with a `componentsKey`, so it's ready to be used in a loop.
 
 ## Loops

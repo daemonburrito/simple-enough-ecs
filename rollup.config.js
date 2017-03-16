@@ -1,5 +1,5 @@
 import babel from 'rollup-plugin-babel';
-import babelrc from 'babelrc-rollup';
+//import babelrc from 'babelrc-rollup';
 
 
 let pkg = require('./package.json');
@@ -10,7 +10,9 @@ export default {
   entry: 'src/Simple.js',
 
   plugins: [
-    babel(babelrc())
+    babel({
+      exclude: 'node_modules/**'
+    })
   ],
   external: external,
   targets: [

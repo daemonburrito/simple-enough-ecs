@@ -1,8 +1,9 @@
 {
   "presets": [["env", {
+    "modules": false,
+    "exclude": ["transform-regenerator"],
     "targets": {
-      "node": "current",
-      "browsers": ["last 2 firefox versions", "last 2 chrome versions"],
+      "browsers": ["last 2 firefox versions"],
       "useBuiltIns": true,
       "debug": true
     }}]],

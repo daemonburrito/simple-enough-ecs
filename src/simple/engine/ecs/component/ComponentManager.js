@@ -9,12 +9,24 @@
 // return value of `createComponentKey` and uses it for `register()` methods.
 //
 // The other responsibility of this object is fulfilled by its feed of all
-// extant keys. 
+// extant keys.
+class ComponentKeySet extends Set {
+  isSuperset(subset) {
+      for (var elem of subset) {
+          if (!this.has(elem)) {
+              return false;
+          }
+      }
+      return true;
+  }
+}
+
+
 export default class ComponentManager {
   knownKeys = new Set();
 
   createComponentKey (...components) {
-    let key = new Set(components);
+    let key = new ComponentKeySet(...components);
     this.knownKeys.add(key);
     return key;
   }

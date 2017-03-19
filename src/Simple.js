@@ -21,6 +21,18 @@ import LoopFactory from
 import extrapolated_loop from
   './simple/engine/loops/extrapolated-render';
 
+import keycodes from
+  './simple/constants/keycodes';
+import degreesToRadians from
+  './simple/constants/tables/degreesToRadians';
+
+const constants = {
+  KEYS: keycodes,
+  tables: {
+    DEGREES_TO_RADIANS: degreesToRadians
+  }
+};
+
 export {EntityManager, EntityMeta};
 export * from './simple/engine/ecs/entity/fn';
 
@@ -31,3 +43,5 @@ export {SystemManager, System, SystemQueue};
 export {World};
 
 export {LoopFactory, extrapolated_loop};
+
+export {constants};

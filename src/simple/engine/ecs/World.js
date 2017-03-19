@@ -18,13 +18,13 @@ export default class World {
   // Start simulation loop
   go(loopFrame) {
     //console.log("Simulation started.");
-    loopFrame();
+    return loopFrame();
     //requestAnimationFrame(loopFrame);
   }
 
   // Stop simulation loop
-  stop() {
-    cancelAnimationFrame();
+  stop(reqId) {
+    cancelAnimationFrame(reqId);
   }
 
   set ComponentManager(manager) {

@@ -1,7 +1,14 @@
 {
   "presets": [["env", {
     "modules": false,
-    "exclude": ["transform-regenerator"],
+    "debug": true,
+    "exclude": [
+      "transform-regenerator",
+      "transform-es2015-classes",
+      "transform-es2015-for-of",
+      "transform-es2015-destructuring",
+      "transform-es2015-block-scoping"
+    ],
     "targets": {
       "browsers": ["last 2 firefox versions"],
       "useBuiltIns": true,

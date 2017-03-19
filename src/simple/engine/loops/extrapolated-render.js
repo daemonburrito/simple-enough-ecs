@@ -4,7 +4,10 @@
 const TARGET_FPS = 30,
   FRAME_DURATION = 1000 / TARGET_FPS;
 
-let previousTime = 0,
+// NOTE TODO v8 can't optimize "let compound assignment"; ie,
+// `let foo = 0; foo += 1`. Someone needs to write Babel plugins that
+// transform syntax like this for all low-hanging fruit with interpreters.
+var previousTime = 0,
   lag = 0,
   elapsed = 0,
   lagOffset = 0;
@@ -41,7 +44,7 @@ const Frame = function (hrt) {
 
   previousTime = hrt;
 
-  requestAnimationFrame(Frame.bind(this));
+  return requestAnimationFrame(Frame.bind(this));
 
 };
 

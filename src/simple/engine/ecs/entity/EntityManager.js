@@ -37,10 +37,18 @@ export default class EntityManager {
   }
 
   // Add an entry to the mapping [Symbol(id)]->{components}
-  attachComponents(id, ...components) {
-    this.entityComponents.set(
-      id, components
-    );
+  attachComponents(id, components) {
+    if (!this.entityComponents.get(id)) {
+      this.entityComponents.set(
+        id, components
+      );
+    }
+    else {
+      Object.assign(
+        this.entityComponents.get(id),
+        components
+      )
+    }
   }
 
   // Add an entry to the mapping [Symbol(componentsKey)]->[ids]
@@ -59,7 +67,22 @@ export default class EntityManager {
 
   // Retrieve list of entities from a componentsKey
   query(componentsKey) {
-    return this.componentEntityMap.get(componentsKey);
+    // change this to return any entity that has the members of the
+    // componentsKey as a subset of its components.
+
+    // for k, v of componentEntityMap
+    // is k a superset of componentsKey?
+    let matches = new Set();
+    for (let [k, v] of this.componentEntityMap) {
+      if (k.isSuperset(componentsKey)) {
+        for (let entity of v) {
+          matches.add(entity);
+        }
+      }
+    }
+    if (matches.size > 0) {
+      return matches
+    }
   }
 
   _getId() {
@@ -71,7 +94,6 @@ export default class EntityManager {
   // Generator which will return (entityId, {components})
   *entityFeed(componentsKey) {
     let ids = this.query(componentsKey);
-    //console.log(ids);
     for (let entity of ids) {
       if (typeof entity === 'string') {
         console.warn(
@@ -79,6 +101,7 @@ export default class EntityManager {
         );
         entity = Number(entity);
       }
+
       yield {
         entity,
         components: this.entityComponents.get(entity)

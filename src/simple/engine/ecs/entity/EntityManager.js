@@ -38,9 +38,17 @@ export default class EntityManager {
 
   // Add an entry to the mapping [Symbol(id)]->{components}
   attachComponents(id, components) {
-    this.entityComponents.set(
-      id, components
-    );
+    if (!this.entityComponents.get(id)) {
+      this.entityComponents.set(
+        id, components
+      );
+    }
+    else {
+      Object.assign(
+        this.entityComponents.get(id),
+        components
+      )
+    }
   }
 
   // Add an entry to the mapping [Symbol(componentsKey)]->[ids]

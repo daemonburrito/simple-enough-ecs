@@ -10,8 +10,9 @@ export default class SystemQueue {
   }
 
   run(entity, components) {
-    //console.log('systemQueue', entity, components);
-    this.queue.forEach(v => v.update(entity, components));
+    this.queue.forEach(system => {
+      system.update(entity, components);
+    });
   }
 
   static _prioComparator(a, b) {

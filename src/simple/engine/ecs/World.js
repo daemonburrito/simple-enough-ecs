@@ -1,6 +1,7 @@
 export default class World {
   constructor(attributes) {
     this.attributes = attributes;
+    this.stopped = false;
   }
 
   update() {
@@ -19,11 +20,14 @@ export default class World {
   go(loopFrame) {
     //console.log("Simulation started.");
     return loopFrame();
-    //requestAnimationFrame(loopFrame);
+    //return requestAnimationFrame(loopFrame);
   }
 
   // Stop simulation loop
-  stop(reqId) {
+  stop(loopFrame, reqId) {
+    console.log('Stopped', reqId);
+    this.stopped = true;
+
     cancelAnimationFrame(reqId);
   }
 

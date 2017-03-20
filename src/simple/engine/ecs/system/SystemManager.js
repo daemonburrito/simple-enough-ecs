@@ -6,6 +6,7 @@
 // it offers a series of data types like queues for specifying order and
 // priority of world updates.
 
+// TODO Pre-bake entity lookups by component key subset.
 
 export default class SystemManager {
   queues = new Map();
@@ -19,6 +20,7 @@ export default class SystemManager {
     return this.queues.get(componentsKey);
   }
 
+  // Run queue of systems registered with this componentsKey
   runQueue(componentsKey, entity, components) {
     if (this.queues.has(componentsKey)) {
       this.queues.get(componentsKey).run(entity, components);

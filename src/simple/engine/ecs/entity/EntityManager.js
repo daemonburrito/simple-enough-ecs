@@ -16,7 +16,8 @@ export default class EntityManager {
 
   // actual component values
   // [entityId]: {
-  //  "foo": 100
+  //  "foo": 100,
+  //  ...
   // }
   entityComponents = new Map();
 
@@ -33,7 +34,6 @@ export default class EntityManager {
   // Factory fn for entities (though they are just integer ids).
   create() {
     return this._getId();
-    //return Symbol();
   }
 
   // Add an entry to the mapping [Symbol(id)]->{components}
@@ -66,12 +66,9 @@ export default class EntityManager {
   }
 
   // Retrieve list of entities from a componentsKey
+  // Will return all entities whose components are a superset of the
+  // components in the componentsKey.
   query(componentsKey) {
-    // change this to return any entity that has the members of the
-    // componentsKey as a subset of its components.
-
-    // for k, v of componentEntityMap
-    // is k a superset of componentsKey?
     let matches = new Set();
     for (let [k, v] of this.componentEntityMap) {
       if (k.isSuperset(componentsKey)) {
@@ -81,7 +78,7 @@ export default class EntityManager {
       }
     }
     if (matches.size > 0) {
-      return matches
+      return matches;
     }
   }
 

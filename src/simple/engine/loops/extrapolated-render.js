@@ -23,7 +23,6 @@ const render = (lagOffset) => {
 
 const Frame = function (hrt) {
   //console.log("** Animation frame", this);
-
   if (!hrt) {
     hrt = 0;
   }
@@ -43,9 +42,12 @@ const Frame = function (hrt) {
   this.render(lagOffset);
 
   previousTime = hrt;
-
-  return requestAnimationFrame(Frame.bind(this));
-
+  if (!this.world.stopped) {
+    return requestAnimationFrame(Frame.bind(this));
+  }
+  else {
+    console.log('Stopped in frame');
+  }
 };
 
 export default Frame;

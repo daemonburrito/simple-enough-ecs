@@ -1,0 +1,23 @@
+{
+  "name": "simple-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -c",
+    "watch": "rollup -c -w"
+  },
+  "author": "daemonburrito",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "rollup": "^0.41.6",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-watch": "^3.2.2"
+  },
+  "dependencies": {
+    "three": "^0.84.0"
+  }
+}
